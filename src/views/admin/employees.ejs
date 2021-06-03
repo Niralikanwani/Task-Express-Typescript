@@ -1,0 +1,75 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/table.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <div style="display: flex;justify-content: center;margin-bottom: 10px;">
+                    <a role="button" class="<%= path === '/admin/add-employee' ? 'active' : '' %> btn" href="/admin/add-employee">Add Employee
+                    </a>
+                </div>
+                <div>
+                    <table class="main_table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Department
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <% if (emps.length > 0) { %>
+                        <tbody>
+                            <% for (let employee of emps) { %>
+                            <tr>
+                                <td>#<%= employee._id %></td>
+                                <td><%= employee.firstname %></td>
+                                <td><%= employee.lastname %></td>
+                                <td><%= employee.phonenumber %></td>
+                                <td><%= employee.email %></td>
+                                <td><%= employee.department %></td>
+                                <td>
+                                    <a href="/admin/edit-employee/<%= employee._id %>?edit=true" class="btn">Edit</a>
+                                    <form action="/admin/delete-employee" method="POST">
+                                        <input type="hidden" value="<%= employee._id %>" name="employeeId">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button class="btn" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <% } %>
+                        <% } else { %>
+                                <tr>
+                                    <td colspan="7">
+                                        No Employees Found!
+                                    </td>
+                                </tr>
+                        <% } %>
+                            
+                        </tbody>
+                        
+                    </table>
+                    <%- include('../includes/pagination.ejs', {currentPage: currentPage, nextPage: nextPage, previousPage: previousPage, lastPage: lastPage, hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage}) %>                       
+            </div>
+            </main>
+            <%- include('../includes/end.ejs') %>

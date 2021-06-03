@@ -1,0 +1,46 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="employee-form" action="/admin/<% if (editing) { %>edit-employee<% } else { %>add-employee<% } %>" method="POST">
+            <div class="form-control">
+                <label for="firstname">First Name</label>
+                <input type="text" name="firstname" id="firstname" value="<% if (editing) { %><%= employee.firstname %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="lastname">Last Name</label>
+                <input type="text" name="lastname" id="lastname" value="<% if (editing) { %><%= employee.lastname %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="phonenumber">Phone Number</label>
+                <input type="tel" name="phonenumber" id="phonenumber" value="<% if (editing) { %><%= employee.phonenumber %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="<% if (editing) { %><%= employee.email %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="department">Department</label>
+                <select class="department" name="department" id="department">
+                    <option name="department" value="<% if (editing) { %><%= employee.department %><% } %>" selected><% if (editing) { %><%= employee.department %><% } else { %>Select Department<% } %></option>
+                    <% if (depts.length > 0) { %>
+                        <% for (let department of depts) { %>
+                            <option name="department" value="<%= department.deptname %>"><%= department.deptname %></option>
+                        <% } %>
+                    <% } %>
+                </select>
+                <!-- <input type="text" name="department" id="department" value="<% if (editing) { %><%= employee.department %><% } %>"> -->
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= employee._id %>" name="employeeId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Employee<% } else { %>Add Employee<% } %></button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>

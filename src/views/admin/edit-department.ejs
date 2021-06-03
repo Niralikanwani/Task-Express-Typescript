@@ -1,0 +1,26 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="department-form" action="/admin/<% if (editing) { %>edit-department<% } else { %>add-department<% } %>" method="POST">
+            <div class="form-control">
+                <label for="deptname">Department Name</label>
+                <input type="text" name="deptname" id="deptname" value="<% if (editing) { %><%= department.deptname %><% } %>">
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5"><% if (editing) { %><%= department.description %><% } %></textarea>
+            </div>
+            <% if (editing) { %>
+                <input type="hidden" value="<%= department._id %>" name="departmentId">
+            <% } %>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button class="btn" type="submit"><% if (editing) { %>Update Department<% } else { %>Add Department<% } %></button>
+        </form>
+    </main>
+<%- include('../includes/end.ejs') %>
