@@ -13,27 +13,29 @@ import session from 'express-session';
 import MongoStore from 'connect-mongodb-session';
 const MongoDBStore = MongoStore(session);
 // const csrf = require('csurf');
-import csrf from 'csurf';
+// import csrf from 'csurf';
 // const flash = require('connect-flash');
 import flash from 'connect-flash';
+// const multer = require('multer');
 
-const errorController = require('./controllers/error');
-// import * as errorController from './controllers/error';
+// const errorController = require('./controllers/error');
+import * as errorController from './controllers/error';
 // const User = require('./models/user');
 import { User } from './models/user';
 
 const MONGODB_URI =
-  'mongodb+srv://root:NOvSqnV0lzmK3Fe5@cluster0.mbxze.mongodb.net/emp-dept';
+  'mongodb+srv://root:NOvSqnV0lzmK3Fe5@cluster0.mbxze.mongodb.net/emp-dep-db';
 
 const app = express();
 const store = new MongoDBStore({
   uri: MONGODB_URI,
   collection: 'sessions'
 });
-const csrfProtection = csrf();
+// const csrfProtection = csrf();
+
 
 app.set('view engine', 'ejs');
-app.set('views', 'views');
+app.set('views', './dist/views');
 
 // const adminRoutes = require('./routes/admin');
 import adminRoutes from './routes/admin';
@@ -52,7 +54,7 @@ app.use(
     store: store
   })
 );
-app.use(csrfProtection);
+// app.use(csrfProtection);
 app.use(flash());
 
 app.use((req: any, res: any, next: any) => {
@@ -70,20 +72,21 @@ app.use((req: any, res: any, next: any) => {
 
 app.use((req: any, res: any, next: any) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
+  // res.locals.csrfToken = req.csrfToken();
   next();
 });
 
-// app.use('/admin', adminRoutes);
-// app.use(homeRoutes);
+app.use('/admin', adminRoutes);
+app.use(homeRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);
 
 mongoose
-  .connect(MONGODB_URI)
+  .connect(MONGODB_URI,{useNewUrlParser: true , useUnifiedTopology: true})
   .then(result => {
-    app.listen(8000);
+    console.log("Listening to localhost:4040");
+    app.listen(4040);
   })
   .catch(err => {
     console.log(err);

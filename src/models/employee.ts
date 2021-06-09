@@ -25,6 +25,10 @@ const employeeSchema = new Schema({
     type: String,
     ref: 'Department',
     required: true
+  },
+  imageUrl: {
+    type: String,
+    required: true
   }
 });
 

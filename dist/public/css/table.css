@@ -1,0 +1,21 @@
+.main_table {
+    margin-left:auto; 
+    margin-right:auto;
+    width: 75%;
+    height: 75%;
+    text-align: center;
+    border: 4px solid #00695c;
+    border-collapse: collapse;
+  }
+
+.main_table thead tr {
+    height: 50px;
+    font-size: large;
+    border-bottom: 3px solid #00695c;
+}
+
+.main_table tbody tr {
+    height: 40px;
+    font-size: medium;
+    border-bottom: 1px solid #00695c;
+}

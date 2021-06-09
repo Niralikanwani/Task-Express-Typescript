@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run copy-static-assets",
     "copy-static-assets": "ts-node copyStaticAssets.ts",
-    "start": "nodemon --exec npx ts-node app.ts",
+    "start": "nodemon --exec npx ts-node ./src/app.ts",
     "start-server": "node app.js"
   },
   "author": "Nirali Kanwani",
@@ -18,6 +18,7 @@
     "@types/connect-mongodb-session": "^2.4.0",
     "@types/csurf": "^1.11.1",
     "@types/express-session": "^1.17.3",
+    "@types/multer": "^1.4.5",
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2"
   },
@@ -33,8 +34,10 @@
     "express": "^4.17.1",
     "express-handlebars": "^5.3.2",
     "express-session": "^1.17.2",
+    "express-validator": "^6.11.1",
     "mongodb": "^3.6.7",
     "mongoose": "^5.12.10",
+    "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.6.1",
     "nodemailer-sendgrid-transport": "^0.2.0",
